@@ -1,9 +1,12 @@
-"use server ";
+
 import NoteBoard from "../components/NoteBoard";
 import { cookies } from "next/headers";
 import { prisma } from "../lib/prisma";
 import { Note } from "@prisma/client";
 import PasswordGate from "../components/PasswordGate";
+
+
+export const dynamic = "force-dynamic"
 
 export default async function HomePage() {
   const cookieStore = cookies();
