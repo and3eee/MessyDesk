@@ -1,11 +1,14 @@
 import "@mantine/core/styles.css";
+import '@mantine/notifications/styles.css';
 import React from "react";
 import { MantineProvider, ColorSchemeScript } from "@mantine/core";
+import { ModalsProvider } from "@mantine/modals";
 import { theme } from "../theme";
+import Shell from "../components/Shell";
 
 export const metadata = {
-  title: "Mantine Next.js template",
-  description: "I am using Mantine with Next.js!",
+  title: "Messy Desk",
+  description: "Post some notes on the communal desk",
 };
 
 export default function RootLayout({ children }: { children: any }) {
@@ -20,7 +23,12 @@ export default function RootLayout({ children }: { children: any }) {
         />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <ModalsProvider>
+            
+            <Shell>{children}</Shell>
+          </ModalsProvider>
+        </MantineProvider>
       </body>
     </html>
   );
