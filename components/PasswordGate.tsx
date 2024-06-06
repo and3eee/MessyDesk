@@ -1,8 +1,10 @@
 "use client";
 
-import { Button, Modal, Skeleton, Stack, Text, TextInput } from "@mantine/core";
+import { Button, Modal, Overlay, Skeleton, Stack, Text, TextInput } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { modals } from "@mantine/modals";
+import { notifications } from "@mantine/notifications";
+import { BellIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
 
 export default function PasswordGate(props: {
@@ -28,6 +30,13 @@ export default function PasswordGate(props: {
               if (input == props.password) {
                 setValidated(true);
                 close();
+              }else{
+                notifications.show({
+                    color: "red",
+                    icon: <BellIcon/>,
+                    title: 'Error!',
+                    message: "You should know the password though.",
+                  })
               }
             }}
           >
@@ -35,7 +44,7 @@ export default function PasswordGate(props: {
           </Button>
         </Stack>
       </Modal>
-      <Skeleton visible={!validated}>{props.children}</Skeleton>
+      {!validated && <Overlay color="#000" backgroundOpacity={0.35} blur={15} />}{props.children}
     </>
   );
 }

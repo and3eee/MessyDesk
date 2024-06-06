@@ -13,8 +13,8 @@ export default function NotePad(props: { note: NoteWrapped; admin?: boolean }) {
     <Paper
       style={{
         position: "absolute",
-        left: props.note.posX * 0.85 * width + 0.05 * width,
-        top: props.note.posY * 0.68 * height ,
+        left: props.note.posX * 0.81 * width + 0.05*width + 12,
+        top: props.note.posY * 0.64 * height + 0.1*height +12,
       }}
       shadow="xl"
       bg={props.note.color}

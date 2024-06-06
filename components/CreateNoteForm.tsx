@@ -11,6 +11,8 @@ import { useViewportSize } from "@mantine/hooks";
 import { Prisma } from "@prisma/client";
 import Decimal from "decimal.js";
 import { UserPref } from "../lib/types";
+import { notifications } from "@mantine/notifications";
+import { BellIcon } from "@radix-ui/react-icons";
 
 export default function CreateNoteForm(props: {
   userRef: UserPref;
@@ -26,16 +28,17 @@ export default function CreateNoteForm(props: {
     initialValue: "",
     validateOnChange: true,
     validate: (value) =>
-      (badwords.check(value.trim()) || value.trim().length <3 )? "Message invalid" : null,
+      (badwords.check(value.trim()) || value.trim().length <10 || value.trim().length>150 )? "Message invalid. Must be between 10 and 150 characters, and cannot contian profantiy. " : null,
   });
   const { height, width } = useViewportSize();
   const wrappedX =  new Prisma.Decimal(props.posX)
   const wrappedY =new Prisma.Decimal( props.posY)
   const router = useRouter();
+  
   const submit = async () => {
     console.log(wrappedY)
 
-    if (!field.error) {
+    if (!field.error ) {
     await CreateNote({
         id: 0,
         message: field.getValue(),
@@ -46,6 +49,12 @@ export default function CreateNoteForm(props: {
         dateCreated: new Date(),
       });
 
+      notifications.show({
+        color: "red",
+        icon: <BellIcon/>,
+        title: 'Error!',
+        message: "Invalid post. Please reference error for more details.",
+      })
       props.onCreate()
         router.refresh();
       
@@ -60,6 +69,7 @@ export default function CreateNoteForm(props: {
         label="Message"
         placeholder="Enter your message"
         mb="md"
+        error={field.error}
       />
       <Button
         onClick={submit}
