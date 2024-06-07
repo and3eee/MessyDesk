@@ -18,7 +18,7 @@ export default function CreateNoteForm(props: {
   userRef: UserPref;
   posX: number;
   posY: number;
-  onCreate: () => void
+  onCreate: () => void;
 }) {
   const BadWordsNext = require("bad-words-next");
   const en = require("bad-words-next/data/en.json");
@@ -28,37 +28,40 @@ export default function CreateNoteForm(props: {
     initialValue: "",
     validateOnChange: true,
     validate: (value) =>
-      (badwords.check(value.trim()) || value.trim().length <10 || value.trim().length>150 )? "Message invalid. Must be between 10 and 150 characters, and cannot contian profantiy. " : null,
+      badwords.check(value.trim()) ||
+      value.trim().length < 10 ||
+      value.trim().length > 150
+        ? "Message invalid. Must be between 10 and 150 characters, and cannot contian profantiy. "
+        : null,
   });
   const { height, width } = useViewportSize();
-  const wrappedX =  new Prisma.Decimal(props.posX)
-  const wrappedY =new Prisma.Decimal( props.posY)
+  const wrappedX = new Prisma.Decimal(props.posX);
+  const wrappedY = new Prisma.Decimal(props.posY);
   const router = useRouter();
-  
-  const submit = async () => {
-    console.log(wrappedY)
 
-    if (!field.error ) {
-    await CreateNote({
+  const submit = async () => {
+    console.log(wrappedY);
+
+    if (!field.error) {
+      await CreateNote({
         id: 0,
         message: field.getValue(),
         posX: wrappedX,
-        posY:  wrappedY,
+        posY: wrappedY,
         author: props.userRef.name ?? "Anon",
         color: props.userRef.color ?? "#FFFFFF",
         dateCreated: new Date(),
       });
 
+      props.onCreate();
+      router.refresh();
+    } else
       notifications.show({
         color: "red",
-        icon: <BellIcon/>,
-        title: 'Error!',
+        icon: <BellIcon />,
+        title: "Error!",
         message: "Invalid post. Please reference error for more details.",
-      })
-      props.onCreate()
-        router.refresh();
-      
-    }
+      });
   };
 
   return (
@@ -71,11 +74,7 @@ export default function CreateNoteForm(props: {
         mb="md"
         error={field.error}
       />
-      <Button
-        onClick={submit}
-      >
-        Post It
-      </Button>
+      <Button onClick={submit}>Post It</Button>
     </Stack>
   );
 }
