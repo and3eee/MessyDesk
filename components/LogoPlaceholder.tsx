@@ -18,6 +18,7 @@ export default function LogoPlaceholder(props: {
     handlers.increment();
     if(count == 42 ||  count==100 ){
       try{
+        if (typeof dtrum !== "undefined") 
         dtrum.identifyUser("Breaking Things")
       }catch(e){
 
