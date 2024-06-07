@@ -7,8 +7,7 @@ import { UserPref } from "../lib/types";
 import { useCounter } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 
-export default function LogoPlaceholder(props: {
-  userPrefsFromCookies: UserPref;
+export default function BookMarkLogo(props: {
   secret: string;
 }) {
   const [count, handlers] = useCounter(0, { min: 0, max: 100 });
@@ -16,23 +15,17 @@ export default function LogoPlaceholder(props: {
 
   const handler = () => {
     handlers.increment();
-    if(count == 42 ||  count==100 ){
+    if(count % 5 == 0){
       try{
-        dtrum.identifyUser("Breaking Things")
+        dtrum.enterAction(process.env.ACTION)
       }catch(e){
 
       }
-      notifications.show({
-        color: "red",
-        icon: <BellIcon/>,
-        title: 'Error!',
-        message: 'User found super sensititive data I mean here is a SSN: ' + props.secret,
-      })
     }
   }
   return (
-    <ActionIcon onClick={handler} radius={"xl"} color={props.userPrefsFromCookies.color ?? "green"} size="xl">
-      <DesktopIcon />
+    <ActionIcon onClick={handler} size="lg">
+      <BookmarkIcon />
     </ActionIcon>
   );
 }

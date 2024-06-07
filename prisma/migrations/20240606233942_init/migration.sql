@@ -2,8 +2,8 @@
 CREATE TABLE `Note` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `message` VARCHAR(191) NOT NULL,
-    `posX` INTEGER NOT NULL,
-    `posY` INTEGER NOT NULL,
+    `posX` DECIMAL(65, 30) NOT NULL,
+    `posY` DECIMAL(65, 30) NOT NULL,
     `author` VARCHAR(191) NOT NULL,
     `color` VARCHAR(191) NOT NULL,
     `dateCreated` DATETIME(3) NOT NULL,
