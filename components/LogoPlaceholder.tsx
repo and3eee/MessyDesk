@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { BellIcon, BookmarkIcon, DesktopIcon } from "@radix-ui/react-icons";
 
@@ -13,26 +13,36 @@ export default function LogoPlaceholder(props: {
 }) {
   const [count, handlers] = useCounter(0, { min: 0, max: 100 });
 
-
   const handler = () => {
     handlers.increment();
-    if(count == 42 ||  count==100 ){
-      try{
-        if (typeof dtrum !== "undefined") 
-        dtrum.identifyUser("Breaking Things")
-      }catch(e){
-
-      }
+    try {
+      if (typeof dtrum !== "undefined")
+        dtrum.enterAction("Pressed Logo x" + count);
+    } catch (e) {}
+    if (count == 42 || count == 100) {
+      try {
+        if (typeof dtrum !== "undefined") {
+          dtrum.enterAction("Pressed ");
+          dtrum.identifyUser("Breaking Things");
+        }
+      } catch (e) {}
       notifications.show({
         color: "red",
-        icon: <BellIcon/>,
-        title: 'Error!',
-        message: 'User found super sensititive data I mean here is a SSN: ' + props.secret,
-      })
+        icon: <BellIcon />,
+        title: "Error!",
+        message:
+          "User found super sensititive data I mean here is a SSN: " +
+          props.secret,
+      });
     }
-  }
+  };
   return (
-    <ActionIcon onClick={handler} radius={"xl"} color={props.userPrefsFromCookies.color ?? "green"} size="xl">
+    <ActionIcon
+      onClick={handler}
+      radius={"xl"}
+      color={props.userPrefsFromCookies.color ?? "green"}
+      size="xl"
+    >
       <DesktopIcon />
     </ActionIcon>
   );
