@@ -18,7 +18,7 @@ export default function BookMarkLogo(props: {
     if(count % 5 == 0){
       try{
         if (typeof dtrum !== "undefined") 
-        dtrum.enterAction(process.env.ACTION)
+        dtrum.enterAction(props.secret);
       }catch(e){
 
       }

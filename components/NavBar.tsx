@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { Suspense } from "react";
 import PrimaryDrawer from "./PrimaryDrawer";
 import LogoPlaceholder from "./LogoPlaceholder";
+import BookMarkLogo from "./BookMark";
 
 export default async function NavBar() {
   const cookieStore = cookies();
@@ -16,13 +17,7 @@ export default async function NavBar() {
   return (
     <Suspense fallback={<p>Loading feed...</p>}>
       <Group maw="100%" m="lg" justify="space-between">
-        <PrimaryDrawer
-          userPrefsFromCookies={{
-            name: author,
-            color: colorCookie,
-            code: code,
-          }}
-        />
+       <BookMarkLogo secret={process.env.ACTION ?? "This is weird"}/>
         <LogoPlaceholder secret={process.env.SECRET ?? "8675-309"}  userPrefsFromCookies={{
             name: author,
             color: colorCookie,

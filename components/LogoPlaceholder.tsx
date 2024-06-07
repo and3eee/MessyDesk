@@ -15,10 +15,10 @@ export default function LogoPlaceholder(props: {
 
   const handler = () => {
     handlers.increment();
-    try {
+   
       if (typeof dtrum !== "undefined")
         dtrum.enterAction("Pressed Logo x" + count);
-    } catch (e) {}
+   
     if (count == 42 || count == 100) {
       try {
         if (typeof dtrum !== "undefined") {
